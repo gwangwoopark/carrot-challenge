@@ -18,7 +18,6 @@ interface ItemDetailResponse {
 }
 
 const ItemDetail: NextPage<ItemDetailResponse> = ({ tweet, isLiked }) => {
-  console.log(tweet);
   const router = useRouter();
   const { data, mutate } = useSWR<ItemDetailResponse>(
     router.query.id ? `/api/tweets/${router.query.id}` : null
@@ -27,7 +26,6 @@ const ItemDetail: NextPage<ItemDetailResponse> = ({ tweet, isLiked }) => {
   const onFavClick = () => {
     if (!data) return;
     mutate((prev) => {
-      console.log("prev", prev);
       return prev && { ...prev, isLiked: !prev.isLiked };
     }, false);
     toggleFav({});

@@ -22,7 +22,6 @@ interface TweetsResponse {
 
 const Home: NextPage = () => {
   const { data } = useSWR<TweetsResponse>("/api/tweets");
-  console.log(data);
   return (
     <Layout title="Twitter">
       <div className="flex flex-col space-y-5 divide-y">
@@ -77,7 +76,6 @@ const Page: NextPage<{ tweets: TweetWithCount[] }> = ({ tweets }) => {
 };
 
 export async function getServerSideProps() {
-  console.log("SSR");
   const tweets = await client.tweet.findMany({});
   return {
     props: {
