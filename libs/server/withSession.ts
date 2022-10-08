@@ -2,6 +2,8 @@ import { IronSessionOptions } from "iron-session";
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
 
+const COOKIE_PASSWORD = "fF7vhAZ8msUvwIj71vG3Cb6tBDiuKHUzPo2seyGJ8jvyk5yFtY";
+
 declare module "iron-session" {
   interface IronSessionData {
     user?: {
@@ -12,7 +14,7 @@ declare module "iron-session" {
 
 const cookieConfig: IronSessionOptions = {
   cookieName: "carrotchallenge",
-  password: process.env.COOKIE_PASSWORD!,
+  password: COOKIE_PASSWORD!,
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",
   },
