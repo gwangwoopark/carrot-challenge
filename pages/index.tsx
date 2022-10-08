@@ -6,6 +6,8 @@ import useSWR, { SWRConfig } from "swr";
 import { Tweet } from "@prisma/client";
 import client from "@libs/server/client";
 import useUser from "@libs/client/useUser";
+import Router from "next/router";
+import router from "next/router";
 
 export interface TweetWithCount extends Tweet {
   user: {
@@ -24,9 +26,10 @@ interface TweetsResponse {
 const Home: NextPage = () => {
   const { user, isLoading } = useUser();
   const { data } = useSWR<TweetsResponse>("/api/tweets");
-  if (!user) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <Layout title="Twitter">
       <div className="flex flex-col space-y-5 divide-y">
