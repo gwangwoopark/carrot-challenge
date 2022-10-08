@@ -2,19 +2,24 @@ import React from "react";
 import { classNames } from "@libs/client/utils";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import useUser from "@libs/client/useUser";
 
 interface LayoutProps {
   title?: string;
   canGoBack?: boolean;
   children: React.ReactNode;
+  isPrivate?: boolean;
 }
 
 export default function Layout({ title, canGoBack, children }: LayoutProps) {
+  const { user, isLoading } = useUser();
   const router = useRouter();
   const onClick = () => {
     router.back();
   };
-  console.log(title);
+  if (!user) {
+    return null;
+  }
   return (
     <div className="mb-10">
       <Head>
@@ -41,6 +46,7 @@ export default function Layout({ title, canGoBack, children }: LayoutProps) {
           </button>
         )}
         {title && <div>{title}</div>}
+        <div className="absolute right-10 italic text-sm">{user.name}</div>
       </div>
 
       <div className={classNames("pt-12")}>{children}</div>

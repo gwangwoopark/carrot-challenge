@@ -1,5 +1,6 @@
 import { IronSessionOptions } from "iron-session";
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
+import { NextApiRequest, NextApiResponse } from "next";
 
 declare module "iron-session" {
   interface IronSessionData {
@@ -23,4 +24,14 @@ export function withApiSession(handler: any) {
 
 export function withSsrSession(handler: any) {
   return withIronSessionSsr(handler, cookieConfig);
+}
+
+export function signoutSession() {
+  return withIronSessionApiRoute(
+    (req: NextApiRequest, res: NextApiResponse) => {
+      req.session.destroy();
+      res.send({ ok: true });
+    },
+    cookieConfig
+  );
 }
